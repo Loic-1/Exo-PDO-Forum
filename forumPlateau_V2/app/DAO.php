@@ -13,7 +13,7 @@ namespace App;
 abstract class DAO{
 
     private static $host   = 'mysql:host=127.0.0.1;port=3306';
-    private static $dbname = 'forummvc_v2';
+    private static $dbname = 'forum_loic';
     private static $dbuser = 'root';
     private static $dbpass = '';
 
@@ -97,6 +97,7 @@ abstract class DAO{
             $results = ($multiple) ? $stmt->fetchAll() : $stmt->fetch();
 
             $stmt->closeCursor();
+            // si pas $results renvoie null sinon renvoie $results
             return ($results == false) ? null : $results;
         }
         catch(\Exception $e){
