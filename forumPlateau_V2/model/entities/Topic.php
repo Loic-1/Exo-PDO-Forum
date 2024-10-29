@@ -58,8 +58,8 @@ final class Topic extends Entity{
      * Get the value of user
      */ 
     public function getUser(){
-        // return $this->user;
-        return "ee";
+        return $this->user;
+        // return "ee";
     }
 
     /**
