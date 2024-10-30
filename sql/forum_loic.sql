@@ -22,18 +22,15 @@ USE `forum_loic`;
 -- Listage de la structure de table forum_loic. category
 CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) COLLATE utf8mb4_swedish_ci NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Listage des données de la table forum_loic.category : ~0 rows (environ)
+-- Listage des données de la table forum_loic.category : ~2 rows (environ)
 DELETE FROM `category`;
 INSERT INTO `category` (`id_category`, `name`) VALUES
-	(1, 'cat1'),
-	(2, 'cat2'),
-	(3, 'cat3'),
-	(4, 'cat4'),
-	(5, 'cat5');
+	(1, 'category1'),
+	(2, 'category2');
 
 -- Listage de la structure de table forum_loic. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -47,15 +44,24 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_post_topic` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
   CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Listage des données de la table forum_loic.post : ~0 rows (environ)
+-- Listage des données de la table forum_loic.post : ~8 rows (environ)
 DELETE FROM `post`;
+INSERT INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
+	(1, 'text1', '2024-10-30 13:53:48', 1, 1),
+	(2, 'text2', '2024-10-30 13:53:58', 1, 2),
+	(3, 'text1', '2024-10-30 13:54:09', 2, 1),
+	(4, 'text2', '2024-10-30 13:54:14', 2, 2),
+	(5, 'text1', '2024-10-30 13:54:26', 3, 1),
+	(6, 'text2', '2024-10-30 13:54:38', 3, 2),
+	(7, 'text1', '2024-10-30 13:54:48', 4, 1),
+	(8, 'text2', '2024-10-30 13:54:57', 4, 2);
 
 -- Listage de la structure de table forum_loic. topic
 CREATE TABLE IF NOT EXISTS `topic` (
   `id_topic` int NOT NULL AUTO_INCREMENT,
-  `title` varchar(100) COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
+  `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `closed` tinyint NOT NULL,
   `category_id` int DEFAULT NULL,
@@ -65,32 +71,30 @@ CREATE TABLE IF NOT EXISTS `topic` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_topic_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`),
   CONSTRAINT `FK_topic_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Listage des données de la table forum_loic.topic : ~0 rows (environ)
+-- Listage des données de la table forum_loic.topic : ~4 rows (environ)
 DELETE FROM `topic`;
 INSERT INTO `topic` (`id_topic`, `title`, `creationDate`, `closed`, `category_id`, `user_id`) VALUES
-	(1, 'top1', '2024-10-29 14:21:21', 1, 1, 1),
-	(2, 'top2', '2024-10-29 14:21:55', 1, 2, 2),
-	(3, 'top3', '2024-10-29 14:23:56', 1, 3, 1),
-	(4, 'top4', '2024-10-29 14:24:20', 1, 4, 2),
-	(5, 'top5', '2024-10-29 14:24:39', 1, 5, 1),
-	(6, 'top1', '2024-10-29 14:25:13', 1, 1, 2);
+	(1, 'category1/topic1', '2024-10-30 13:50:27', 0, 1, 1),
+	(2, 'category1/topic2', '2024-10-30 13:50:48', 0, 1, 2),
+	(3, 'category2/topic1', '2024-10-30 13:51:10', 0, 2, 1),
+	(4, 'category2/topic2', '2024-10-30 13:51:23', 0, 2, 2);
 
 -- Listage de la structure de table forum_loic. user
 CREATE TABLE IF NOT EXISTS `user` (
   `id_user` int NOT NULL AUTO_INCREMENT,
   `nickName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
-  `password` varchar(255) COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
   `registrationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `roles` json DEFAULT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_swedish_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
   `isBanned` tinyint DEFAULT NULL,
   PRIMARY KEY (`id_user`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Listage des données de la table forum_loic.user : ~0 rows (environ)
+-- Listage des données de la table forum_loic.user : ~2 rows (environ)
 DELETE FROM `user`;
 INSERT INTO `user` (`id_user`, `nickName`, `password`, `registrationDate`, `roles`, `avatar`, `email`, `isBanned`) VALUES
 	(1, 'user1', '1', '2024-10-29 14:22:43', NULL, NULL, NULL, NULL),
