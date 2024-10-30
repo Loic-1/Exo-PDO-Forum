@@ -67,15 +67,18 @@ class ForumController extends AbstractController implements ControllerInterface
         ];
     }
 
-    public function submitPost($text)
+    public function submitPost($data)
     {
+
+        $postManager = new PostManager();
+        // Model\Managers\PostManager;
+        $posts = $postManager->addPost($data);
 
         return [
             "view" => VIEW_DIR . "forum/listPosts.php",
             "meta_description" => "Liste des messages par sujet : ",
             "data" => [
-                // "topics" => $topics,
-                // "posts" => $posts
+                "posts" => $posts
             ]
         ];
     }
