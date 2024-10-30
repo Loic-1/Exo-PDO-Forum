@@ -48,7 +48,7 @@ class ForumController extends AbstractController implements ControllerInterface
         ];
     }
 
-    public function listPostsByCategory($id)
+    public function listPostsByTopic($id)
     {
         $categoryManager = new CategoryManager();
         $topicManager = new TopicManager();

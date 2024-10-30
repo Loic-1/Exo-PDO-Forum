@@ -1,5 +1,5 @@
 <?php
-$categories = $result["data"]['categories'];
+// $categories = $result["data"]['category'];
 $topics = $result["data"]['topics'];
 $posts = $result["data"]['posts'];
 ?>
