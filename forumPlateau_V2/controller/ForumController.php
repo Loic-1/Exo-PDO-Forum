@@ -66,4 +66,17 @@ class ForumController extends AbstractController implements ControllerInterface
             ]
         ];
     }
+
+    public function submitPost($text)
+    {
+
+        return [
+            "view" => VIEW_DIR . "forum/listPosts.php",
+            "meta_description" => "Liste des messages par sujet : ",
+            "data" => [
+                // "topics" => $topics,
+                // "posts" => $posts
+            ]
+        ];
+    }
 }

@@ -9,4 +9,9 @@ $posts = $result["data"]['posts'];
 <?php
 foreach ($posts as $post) { ?>
     <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?></p>
-<?php }
+<?php } ?>
+
+<form action="submitPost" method="$_POST">
+    <input type="text" name="text">
+    <input type="submit">
+</form>
