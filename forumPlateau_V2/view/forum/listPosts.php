@@ -8,6 +8,5 @@ $posts = $result["data"]['posts'];
 
 <?php
 foreach ($posts as $post) { ?>
-    <p>test</p>
-    <p><?= $post ?> par <?= $post->getUser() ?></p>
+    <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?></p>
 <?php }
