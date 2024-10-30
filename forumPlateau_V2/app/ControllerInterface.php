@@ -12,6 +12,5 @@ namespace App;
 
 interface ControllerInterface{
 
-    // les classes qui héritent de ControllerInterface possèdent index() et doivent l'implémenter
     public function index();
 }

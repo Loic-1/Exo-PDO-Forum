@@ -97,7 +97,6 @@ abstract class DAO{
             $results = ($multiple) ? $stmt->fetchAll() : $stmt->fetch();
 
             $stmt->closeCursor();
-            // si pas $results renvoie null sinon renvoie $results
             return ($results == false) ? null : $results;
         }
         catch(\Exception $e){

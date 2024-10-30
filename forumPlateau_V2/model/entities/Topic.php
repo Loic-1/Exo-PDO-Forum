@@ -59,7 +59,6 @@ final class Topic extends Entity{
      */ 
     public function getUser(){
         return $this->user;
-        // return "ee";
     }
 
     /**
