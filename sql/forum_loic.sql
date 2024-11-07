@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.category : ~2 rows (environ)
 DELETE FROM `category`;
@@ -42,19 +42,15 @@ CREATE TABLE IF NOT EXISTS `post` (
   PRIMARY KEY (`id_post`),
   KEY `topic_id` (`topic_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `FK_post_topic` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`),
-  CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+  CONSTRAINT `FK_post_topic` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`) ON DELETE CASCADE,
+  CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
--- Listage des données de la table forum_loic.post : ~8 rows (environ)
+-- Listage des données de la table forum_loic.post : ~4 rows (environ)
 DELETE FROM `post`;
 INSERT INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
 	(1, 'text1', '2024-10-30 13:53:48', 1, 1),
 	(2, 'text2', '2024-10-30 13:53:58', 1, 2),
-	(3, 'text1', '2024-10-30 13:54:09', 2, 1),
-	(4, 'text2', '2024-10-30 13:54:14', 2, 2),
-	(5, 'text1', '2024-10-30 13:54:26', 3, 1),
-	(6, 'text2', '2024-10-30 13:54:38', 3, 2),
 	(7, 'text1', '2024-10-30 13:54:48', 4, 1),
 	(8, 'text2', '2024-10-30 13:54:57', 4, 2);
 
@@ -63,15 +59,15 @@ CREATE TABLE IF NOT EXISTS `topic` (
   `id_topic` int NOT NULL AUTO_INCREMENT,
   `title` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
   `creationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `closed` tinyint NOT NULL,
+  `closed` tinyint DEFAULT '0',
   `category_id` int DEFAULT NULL,
   `user_id` int DEFAULT NULL,
   PRIMARY KEY (`id_topic`),
   KEY `category_id` (`category_id`),
   KEY `user_id` (`user_id`),
-  CONSTRAINT `FK_topic_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`),
-  CONSTRAINT `FK_topic_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+  CONSTRAINT `FK_topic_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`) ON DELETE CASCADE,
+  CONSTRAINT `FK_topic_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.topic : ~4 rows (environ)
 DELETE FROM `topic`;
