@@ -8,7 +8,7 @@ $topics = $result["data"]['topics'];
 <?php
 if ($topics) {
     foreach ($topics as $topic) { ?>
-        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?></p>
+        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?> <a href="">Supprimer Topic</a></p>
 
     <?php }
     // Il n'y a pas de Topics dans cette catégorie
