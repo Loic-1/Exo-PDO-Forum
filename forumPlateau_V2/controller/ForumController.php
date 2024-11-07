@@ -132,16 +132,18 @@ class ForumController extends AbstractController implements ControllerInterface
     }
 
 
-     //-------------------FONCTIONS ADD---------------------
+    //-------------------FONCTIONS ADD---------------------
 
 
-     public function deletePost($id) {
+    public function deletePost($id)
+    {
 
         $postManager = new PostManager;
+        $post = $postManager->findOneById($id);
 
         // if (isset($_POST['id'])) {
-            $postManager->delete($id);
-            $this->redirectTo('forum', 'listPostsByTopic', $id);
+        $postManager->delete($id);
+        $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
         // }
-     }
+    }
 }
