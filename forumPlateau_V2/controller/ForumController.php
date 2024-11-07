@@ -86,7 +86,8 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $postManager->add($data);
 
-        header("Location: index.php?ctrl=forum&action=listPostsByTopic&id=$id");
+        // header("Location: index.php?ctrl=forum&action=listPostsByTopic&id=$id");
+        $this->redirectTo('forum', 'listPostsByTopic', $id);
     }
 
     // add topic title and first message
@@ -107,11 +108,15 @@ class ForumController extends AbstractController implements ControllerInterface
         // var_dump($title, $text);
         // die;
 
-        $data = ["title" => $title];
+        if ($title && $text) {
 
-        $topicManager->add($data);
+            $data = ["title" => $title];
 
-        header("Location: index.php?ctrl=forum&action=listTopicsByCategory&id=$id");
+            $topicManager->add($data);
+
+            $this->redirectTo('forum', 'listTopicsByCategory', $id);
+        }
+        // $this->redirectTo('home');
     }
 
     public function addCategory()
@@ -129,7 +134,6 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $categoryManager->add($data);
 
-        // pas obligé mais bien
-        header("Location: index.php?ctrl=forum&action=listCategory");
+        $this->redirectTo('forum', 'index');
     }
 }
