@@ -112,7 +112,8 @@ class ForumController extends AbstractController implements ControllerInterface
 
             $this->redirectTo('forum', 'listTopicsByCategory', $id);
         }
-        // $this->redirectTo('erreur');
+        // if one of the two fields is null
+        $this->redirectTo('forum', 'listTopicsByCategory', $id);
     }
 
     public function addCategory()
