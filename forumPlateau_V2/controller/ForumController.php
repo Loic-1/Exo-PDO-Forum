@@ -146,4 +146,16 @@ class ForumController extends AbstractController implements ControllerInterface
         $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
         // }
     }
+
+    public function deleteTopic($id)
+    {
+
+        $topicManager = new TopicManager;
+        $topic = $topicManager->findOneById($id);
+
+        // if (isset($_POST['id'])) {
+        $topicManager->delete($id);
+        $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
+        // }
+    }
 }
