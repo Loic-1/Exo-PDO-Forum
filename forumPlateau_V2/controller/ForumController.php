@@ -51,7 +51,7 @@ class ForumController extends AbstractController implements ControllerInterface
 
     public function listPostsByTopic($id)
     {
-        
+
         $topicManager = new TopicManager();
         $postManager = new PostManager();
         // pour mettre topic->getId() dans l'url de submitForm
@@ -69,7 +69,11 @@ class ForumController extends AbstractController implements ControllerInterface
         ];
     }
 
-    public function addPost($id)
+
+    //-------------------FONCTIONS ADD---------------------
+
+
+    public function addPost($id) // id de topic
     {
 
         $topicManager = new TopicManager;
@@ -77,17 +81,40 @@ class ForumController extends AbstractController implements ControllerInterface
         $topic = $topicManager->findOneById($id);
 
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        
-        $data = ["text" => $text, "topic_id"=>$id];
-        
+
+        $data = ["text" => $text, "topic_id" => $id];
+
         $postManager->add($data);
-        
+
         header("Location: index.php?ctrl=forum&action=listPostsByTopic&id=$id");
     }
 
-    public function addTopic($id) { }
+    // add topic title and first message
+    public function addTopic($id) // id de category
+    {
 
-    public function addCategory() {
+        $categoryManager = new CategoryManager;
+        $topicManager = new TopicManager();
+        $category = $categoryManager->findOneById($id);
+        $topics = $topicManager->findTopicsByCategory($id);
+
+        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        // use later
+        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        var_dump($title, $text);
+        die;
+
+        $data = ["title" => $title];
+
+        $topicManager->add($data);
+
+        header("Location: index.php?ctrl=forum&action=listTopicsByCategory&id=$id");
+    }
+
+    public function addCategory()
+    {
 
         $categoryManager = new CategoryManager;
 
@@ -98,9 +125,9 @@ class ForumController extends AbstractController implements ControllerInterface
         // die;
 
         $data = ["name" => $name];
-        
+
         $categoryManager->add($data);
-        
+
         // pas obligé mais bien
         header("Location: index.php?ctrl=forum&action=listCategory");
     }

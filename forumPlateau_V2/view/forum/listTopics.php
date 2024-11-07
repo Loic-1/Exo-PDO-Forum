@@ -10,7 +10,8 @@ foreach($topics as $topic ){ ?>
     <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?></p>
 <?php } ?>
 
-<form action="index.php?ctrl=forum&action=addTopic&id=<?= $topic->getId()?>" method="post">
-    <input type="text" name="text">
+<form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId()?>" method="post">
+    <input type="text" name="title" placeholder="Titre">
+    <input type="text" name="text" placeholder="Premier message">
     <input type="submit">
 </form>
