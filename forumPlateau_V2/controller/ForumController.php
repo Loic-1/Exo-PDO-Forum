@@ -111,6 +111,8 @@ class ForumController extends AbstractController implements ControllerInterface
 
             $topicManager->add($dataTitle);
 
+            // PDO::lastInsertId()
+
             $dataMessage = ["text" => $text, "topic_id" => $id, "user_id" => 1];
 
             $postManager->add($dataMessage);
