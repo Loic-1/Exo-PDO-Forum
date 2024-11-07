@@ -13,7 +13,7 @@ if ($topics) {
     <?php }
     // Il n'y a pas de Topics dans cette catégorie
 } else { ?>
-    <p>Il n'y a pas de Topics dans cette catégorie ☺</p>
+    <p>Il n'y a pas de Topics dans cette catégorie ☺☻</p>
 <?php
 }
 ?>

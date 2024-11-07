@@ -78,7 +78,6 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addPost($id) // id de topic
     {
 
-        // $topicManager = new TopicManager;
         $postManager = new PostManager;
 
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -94,7 +93,6 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addTopic($id) // id de category
     {
 
-        // $categoryManager = new CategoryManager();
         $topicManager = new TopicManager();
         $postManager = new PostManager;
 
@@ -102,23 +100,13 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        // var_dump($title, $text);
-        // die;
-
         if ($title && $text) {
 
             $dataTitle = ["title" => $title, "category_id" => $id];
 
             $topicId = $topicManager->add($dataTitle);
 
-            // var_dump($topic);
-            // die;
-
-            // PDO::lastInsertId()
-
-            
-
-            $dataMessage = ["text" => $text, "topic_id" => $topicId, "user_id" => 1];
+            $dataMessage = ["text" => $text, "topic_id" => $topicId];
 
             $postManager->add($dataMessage);
 
@@ -142,4 +130,15 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $this->redirectTo('forum', 'index');
     }
+
+
+     //-------------------FONCTIONS ADD---------------------
+
+
+     public function deletePost($id) {
+
+        $postManager = new PostManager;
+
+
+     }
 }

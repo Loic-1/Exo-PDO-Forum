@@ -8,7 +8,7 @@ $posts = $result["data"]['posts'];
 
 <?php
 foreach ($posts as $post) { ?>
-    <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?></p>
+    <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?><a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId()?>">Supprimer Message</a></p>
 <?php } ?>
 
 <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId()?>" method="post">
