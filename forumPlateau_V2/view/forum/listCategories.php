@@ -7,7 +7,9 @@
 <?php
 foreach($categories as $category ){ ?>
     <p><a href="index.php?ctrl=forum&action=listTopicsByCategory&id=<?= $category->getId() ?>"><?= $category->getName() ?></a></p>
-<?php }
+<?php } ?>
 
-
-  
+<form action="index.php?ctrl=forum&action=addCategory" method="post">
+    <input type="text" name="name">
+    <input type="submit">
+</form>

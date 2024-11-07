@@ -84,4 +84,24 @@ class ForumController extends AbstractController implements ControllerInterface
         
         header("Location: index.php?ctrl=forum&action=listPostsByTopic&id=$id");
     }
+
+    public function addTopic($id) { }
+
+    public function addCategory() {
+
+        $categoryManager = new CategoryManager;
+
+        // changes '<', '>', '&' into '&lt', '&gt', '&amp'
+        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        // var_dump($name);
+        // die;
+
+        $data = ["name" => $name];
+        
+        $categoryManager->add($data);
+        
+        // pas obligé mais bien
+        header("Location: index.php?ctrl=forum&action=listCategory");
+    }
 }
