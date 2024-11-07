@@ -12,6 +12,6 @@ foreach ($posts as $post) { ?>
 <?php } ?>
 
 <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId()?>" method="post">
-    <input type="text" name="text">
+    <input type="text" name="text" placeholder="Message">
     <input type="submit">
 </form>

@@ -93,18 +93,19 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addTopic($id) // id de category
     {
 
-        $categoryManager = new CategoryManager;
         $topicManager = new TopicManager();
+        $categoryManager = new CategoryManager();
         $category = $categoryManager->findOneById($id);
         $topics = $topicManager->findTopicsByCategory($id);
+
 
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         // use later
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        var_dump($title, $text);
-        die;
+        // var_dump($title, $text);
+        // die;
 
         $data = ["title" => $title];
 

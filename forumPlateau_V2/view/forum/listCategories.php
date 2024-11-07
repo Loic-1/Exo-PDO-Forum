@@ -10,6 +10,6 @@ foreach($categories as $category ){ ?>
 <?php } ?>
 
 <form action="index.php?ctrl=forum&action=addCategory" method="post">
-    <input type="text" name="name">
+    <input type="text" name="name" placeholder="Nom de la catégorie">
     <input type="submit">
 </form>
