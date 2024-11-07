@@ -76,7 +76,7 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addPost($id) // id de topic
     {
 
-        $topicManager = new TopicManager;
+        // $topicManager = new TopicManager;
         $postManager = new PostManager;
 
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -92,13 +92,12 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addTopic($id) // id de category
     {
 
+        // $categoryManager = new CategoryManager();
         $topicManager = new TopicManager();
-        $categoryManager = new CategoryManager();
+        $postManager = new PostManager;
 
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-
-        // use later
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         // var_dump($title, $text);
@@ -106,9 +105,13 @@ class ForumController extends AbstractController implements ControllerInterface
 
         if ($title && $text) {
 
-            $data = ["title" => $title, "category_id" => $id];
+            $dataTitle = ["title" => $title, "category_id" => $id];
 
-            $topicManager->add($data);
+            $topicManager->add($dataTitle);
+
+            $dataMessage = ["text" => $text, "topic_id" => $id, "user_id" => 1];
+
+            $postManager->add($dataMessage);
 
             $this->redirectTo('forum', 'listTopicsByCategory', $id);
         }
