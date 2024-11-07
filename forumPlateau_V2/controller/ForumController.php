@@ -139,6 +139,9 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $postManager = new PostManager;
 
-
+        // if (isset($_POST['id'])) {
+            $postManager->delete($id);
+            $this->redirectTo('forum', 'listPostsByTopic', $id);
+        // }
      }
 }

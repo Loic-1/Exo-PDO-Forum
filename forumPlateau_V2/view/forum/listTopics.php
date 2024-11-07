@@ -14,8 +14,7 @@ if ($topics) {
     // Il n'y a pas de Topics dans cette catégorie
 } else { ?>
     <p>Il n'y a pas de Topics dans cette catégorie ☺☻</p>
-<?php
-}
+<?php }
 ?>
 
 <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="post">
