@@ -20,12 +20,16 @@ session_start();
 use App\Session as Session;
 
 //---------REQUETE HTTP INTERCEPTEE-----------
+
+//---------TRAITEMENT CONTROLLER-----------
+
 $ctrlname = DEFAULT_CTRL;//on prend le controller par défaut
 //ex : index.php?ctrl=home
 if(isset($_GET['ctrl'])){
     $ctrlname = $_GET['ctrl'];
 }
 //on construit le namespace de la classe Controller à appeller
+// ucfirst(): first character uppercase
 $ctrlNS = "controller\\".ucfirst($ctrlname)."Controller";
 //on vérifie que le namespace pointe vers une classe qui existe
 if(!class_exists($ctrlNS)){
@@ -33,6 +37,8 @@ if(!class_exists($ctrlNS)){
     $ctrlNS = "controller\\".DEFAULT_CTRL."Controller";
 }
 $ctrl = new $ctrlNS();
+
+//---------TRAITEMENT ACTION-----------
 
 $action = "index";//action par défaut de n'importe quel contrôleur
 //si l'action est présente dans l'url ET que la méthode correspondante existe dans le ctrl

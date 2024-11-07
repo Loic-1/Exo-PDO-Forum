@@ -1,6 +1,6 @@
 <?php
 // $categories = $result["data"]['category'];
-$topics = $result["data"]['topics'];
+$topic = $result["data"]['topic'];
 $posts = $result["data"]['posts'];
 ?>
 
@@ -11,7 +11,7 @@ foreach ($posts as $post) { ?>
     <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?></p>
 <?php } ?>
 
-<form action="index.php?ctrl=forum&action=submitForm&id=0" method="post">
+<form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId()?>" method="post">
     <input type="text" name="text">
     <input type="submit">
 </form>

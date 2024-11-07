@@ -5,6 +5,7 @@ namespace Controller;
 use App\Session;
 use App\AbstractController;
 use App\ControllerInterface;
+use Model\Entities\Topic;
 use Model\Managers\CategoryManager;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
@@ -53,7 +54,8 @@ class ForumController extends AbstractController implements ControllerInterface
         
         $topicManager = new TopicManager();
         $postManager = new PostManager();
-        $topics = $topicManager->findTopicsByCategory($id);
+        // pour mettre topic->getId() dans l'url de submitForm
+        $topic = $topicManager->findOneById($id);
         // Model\Managers\PostManager;
         $posts = $postManager->findPostsByTopic($id);
 
@@ -61,25 +63,25 @@ class ForumController extends AbstractController implements ControllerInterface
             "view" => VIEW_DIR . "forum/listPosts.php",
             "meta_description" => "Liste des messages par sujet : ",
             "data" => [
-                "topics" => $topics,
+                "topic" => $topic,
                 "posts" => $posts
             ]
         ];
     }
 
-    public function submitPost($data)
+    public function addPost($id)
     {
 
-        $postManager = new PostManager();
-        // Model\Managers\PostManager;
-        $posts = $postManager->addPost($data);
+        $topicManager = new TopicManager;
+        $postManager = new PostManager;
+        $topic = $topicManager->findOneById($id);
 
-        return [
-            "view" => VIEW_DIR . "forum/listPosts.php",
-            "meta_description" => "Liste des messages par sujet : ",
-            "data" => [
-                "posts" => $posts
-            ]
-        ];
+        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        
+        $data = ["text" => $text, "topic_id"=>$id];
+        
+        $postManager->add($data);
+        
+        header("Location: index.php?ctrl=forum&action=listPostsByTopic&id=$id");
     }
 }
