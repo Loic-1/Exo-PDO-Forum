@@ -5,10 +5,12 @@ namespace Controller;
 use App\Session;
 use App\AbstractController;
 use App\ControllerInterface;
+use App\DAO;
 use Model\Entities\Topic;
 use Model\Managers\CategoryManager;
 use Model\Managers\TopicManager;
 use Model\Managers\PostManager;
+use PDO;
 
 class ForumController extends AbstractController implements ControllerInterface
 {
