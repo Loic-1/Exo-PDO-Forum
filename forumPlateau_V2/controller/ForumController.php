@@ -78,7 +78,7 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $topicManager = new TopicManager;
         $postManager = new PostManager;
-        $topic = $topicManager->findOneById($id);
+        // $topic = $topicManager->findOneById($id);
 
         $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -95,8 +95,8 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $topicManager = new TopicManager();
         $categoryManager = new CategoryManager();
-        $category = $categoryManager->findOneById($id);
-        $topics = $topicManager->findTopicsByCategory($id);
+        // $category = $categoryManager->findOneById($id);
+        // $topics = $topicManager->findTopicsByCategory($id);
 
 
         $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
