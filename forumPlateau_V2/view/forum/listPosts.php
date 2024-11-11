@@ -9,7 +9,7 @@ $posts = $result["data"]['posts'];
 <?php
 if ($posts) {
     foreach ($posts as $post) { ?>
-        <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer Message</a></p>
+        <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer Message</a> <a href="index.php?ctrl=forum&action=updatePostText&id=<?= $post->getId() ?>">Modifier message</a> </p>
     <?php }
 } else { ?>
     <p>Il n'y a pas de Posts dans ce topic ☺☻</p>

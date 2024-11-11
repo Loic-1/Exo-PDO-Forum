@@ -132,7 +132,7 @@ class ForumController extends AbstractController implements ControllerInterface
     }
 
 
-    //-------------------FONCTIONS ADD---------------------
+    //-------------------FONCTIONS DELETE---------------------
 
 
     public function deletePost($id)
@@ -157,5 +157,15 @@ class ForumController extends AbstractController implements ControllerInterface
         $topicManager->delete($id);
         $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
         // }
+    }
+
+    // public function delateCategory($id) { }
+
+
+    //-------------------FONCTIONS DELETE---------------------
+
+
+    public function updatePostText($id) : void {
+        
     }
 }
