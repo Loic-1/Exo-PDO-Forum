@@ -178,4 +178,18 @@ class ForumController extends AbstractController implements ControllerInterface
 
         $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
     }
+
+    public function updateTopicTitle($id) {
+        
+        $topicManager = new TopicManager();
+        $topic = $topicManager->findOneById($id);
+
+        $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        $data = ["title" => $title];
+
+        $topicManager->update($data, $id);
+
+        $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
+    }
 }

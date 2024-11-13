@@ -8,7 +8,13 @@ $topics = $result["data"]['topics'];
 <?php
 if ($topics) {
     foreach ($topics as $topic) { ?>
-        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Supprimer Topic</a></p>
+        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Supprimer Topic</a>
+
+        <form action="index.php?ctrl=forum&action=updateTopicTitle&id=<?= $topic->getId() ?>" method="post">
+            <input type="text" name="title" value="<?= $topic ?>">
+            <input type="submit" value="Modifier">
+        </form>
+        </p>
 
     <?php }
     // Il n'y a pas de Topics dans cette catégorie
@@ -20,5 +26,5 @@ if ($topics) {
 <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="post">
     <input type="text" name="title" placeholder="Titre">
     <input type="text" name="text" placeholder="Premier message">
-    <input type="submit"  value="Créer">
+    <input type="submit" value="Créer">
 </form>
