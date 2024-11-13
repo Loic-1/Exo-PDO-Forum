@@ -75,30 +75,30 @@ abstract class Manager{
         return DAO::delete($sql, ['id' => $id]); 
     }
 
-    // public function update($data){
-    //     //$keys = ['username' , 'password', 'email']
-    //     $keys = array_keys($data);
-    //     //$values = ['Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com']
-    //     $values = array_values($data);
-    //     //"username,password,email"
-    //     $sql = "UPDATE ".$this->tableName."
-    //             SET ".implode(',', $keys)." = ".implode(',',$values)."
-    //             WHERE id_".$this->tableName." = :id
-    //             ";
-    //             //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
-    //     /*
-    //         INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
-    //     */
-    //     try{
-    //         return DAO::insert($sql);
-    //     }
-    //     catch(\PDOException $e){
-    //         echo $e->getMessage();
-    //         die();
-    //     }
-    // }
+    public function update($data){
+        //$keys = ['username' , 'password', 'email']
+        $keys = array_keys($data);
+        //$values = ['Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com']
+        $values = array_values($data);
+        //"username,password,email"
+        $sql = "UPDATE ".$this->tableName."
+                SET ".implode(',', $keys)." = ".implode(',',$values)."
+                WHERE id_".$this->tableName." = :id
+                ";
+                //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
+        /*
+            INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
+        */
+        try{
+            return DAO::update($sql);
+        }
+        catch(\PDOException $e){
+            echo $e->getMessage();
+            die();
+        }
+    }
 
-    public function update($data){ }
+    // public function update($data){ }
 
     private function generate($rows, $class){
         foreach($rows as $row){
