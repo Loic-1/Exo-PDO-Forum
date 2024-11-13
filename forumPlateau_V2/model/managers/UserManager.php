@@ -13,4 +13,9 @@ class UserManager extends Manager{
     public function __construct(){
         parent::connect();
     }
+
+    // fait le compte des lignes ayant le même pseudo ou le même e-mail que le user selectionné, si COUNT >= 1 then false else true
+    public function isUnique() : Bool {
+        
+    }
 }
