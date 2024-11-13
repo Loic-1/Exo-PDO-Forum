@@ -159,13 +159,29 @@ class ForumController extends AbstractController implements ControllerInterface
         // }
     }
 
-    // public function delateCategory($id) { }
+    // public function deleteCategory($id) { }
 
 
     //-------------------FONCTIONS DELETE---------------------
 
 
     public function updatePostText($id) : void {
-        
+        // var_dump($id);
+        // die;
+
+        $postManager = new PostManager();
+        $post = $postManager->findOneById($id);
+
+        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        // var_dump($text);
+        // die;
+
+        $data = ["text" => $text];
+
+        // var_dump($data);
+        // die;
+
+        $postManager->update($data);
     }
 }
