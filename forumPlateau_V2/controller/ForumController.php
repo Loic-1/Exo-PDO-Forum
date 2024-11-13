@@ -166,22 +166,16 @@ class ForumController extends AbstractController implements ControllerInterface
 
 
     public function updatePostText($id) : void {
-        // var_dump($id);
-        // die;
 
         $postManager = new PostManager();
         $post = $postManager->findOneById($id);
 
-        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-
-        // var_dump($text);
-        // die;
+        $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         $data = ["text" => $text];
 
-        // var_dump($data);
-        // die;
+        $postManager->update($data, $id);
 
-        $postManager->update($data);
+        $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
     }
 }

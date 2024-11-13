@@ -75,30 +75,54 @@ abstract class Manager{
         return DAO::delete($sql, ['id' => $id]); 
     }
 
-    public function update($data){
-        //$keys = ['username' , 'password', 'email']
-        $keys = array_keys($data);
-        //$values = ['Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com']
-        $values = array_values($data);
-        //"username,password,email"
+    // public function update($data){
+    //     //$keys = ['username' , 'password', 'email']
+    //     $keys = array_keys($data);
+    //     //$values = ['Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com']
+    //     $values = array_values($data);
+    //     //"username,password,email"
+    //     $sql = "UPDATE ".$this->tableName."
+    //             SET ".implode(',', $keys)." = ".implode(',',$values)."
+    //             WHERE id_".$this->tableName." = :id
+    //             ";
+    //             //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
+    //     /*
+    //         INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
+    //     */
+    //     try{
+    //         return DAO::update($sql);
+    //     }
+    //     catch(\PDOException $e){
+    //         echo $e->getMessage();
+    //         die();
+    //     }
+    // }
+
+    public function update($data, $id){
+ 
+        // Tableau qui récupère la key et la value de $data
+        $setStatements = [];
+ 
+        // Effectue un forEach pour récupérer tous les éléments
+        foreach ($data as $key => $value) {
+            $setStatements[] = "$key = :$key";
+        }
+        // Supprime les virgules du tableau
+        $setClause = implode(', ', $setStatements);
+        // Déclare une requête SQL pour update un élément
         $sql = "UPDATE ".$this->tableName."
-                SET ".implode(',', $keys)." = ".implode(',',$values)."
-                WHERE id_".$this->tableName." = :id
-                ";
-                //"'Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com'"
-        /*
-            INSERT INTO user (username,password,email) VALUES ('Squalli', 'dfsyfshfbzeifbqefbq', 'sql@gmail.com') 
-        */
+                SET " .$setClause."
+                WHERE id_".$this->tableName." = :id";
+ 
         try{
-            return DAO::update($sql);
+            $data['id'] = $id;
+            return DAO::update($sql, $data);
         }
         catch(\PDOException $e){
             echo $e->getMessage();
             die();
         }
     }
-
-    // public function update($data){ }
 
     private function generate($rows, $class){
         foreach($rows as $row){
