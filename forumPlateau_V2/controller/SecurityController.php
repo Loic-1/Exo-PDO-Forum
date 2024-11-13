@@ -22,6 +22,7 @@ class SecurityController extends AbstractController{
 
             // Longueur du mot de passe variable (12 comme exemple)
             if ($pass1 === $pass2 && strlen($pass1) >= 12) {
+                
                 $hash = password_hash($pass1, PASSWORD_DEFAULT);
 
                 $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
