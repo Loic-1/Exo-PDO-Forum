@@ -162,7 +162,7 @@ class ForumController extends AbstractController implements ControllerInterface
     // public function deleteCategory($id) { }
 
 
-    //-------------------FONCTIONS DELETE---------------------
+    //-------------------FONCTIONS UPDATE---------------------
 
 
     public function updatePostText($id) : void {

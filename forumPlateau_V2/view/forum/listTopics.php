@@ -8,7 +8,7 @@ $topics = $result["data"]['topics'];
 <?php
 if ($topics) {
     foreach ($topics as $topic) { ?>
-        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Supprimer Topic</a>
+        <p><a href="index.php?ctrl=forum&action=listPostsByTopic&id=<?= $topic->getId() ?>"><?= $topic ?></a> par <?= $topic->getUser() ?>, le <?= $topic->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deleteTopic&id=<?= $topic->getId() ?>">Supprimer Topic</a> <a href="#">Modifier</a>
 
         <form action="index.php?ctrl=forum&action=updateTopicTitle&id=<?= $topic->getId() ?>" method="post">
             <input type="text" name="title" value="<?= $topic ?>">
