@@ -4,6 +4,7 @@ namespace Model\Managers;
 
 use App\Manager;
 use App\DAO;
+use Generator;
 
 class UserManager extends Manager
 {
@@ -36,5 +37,19 @@ class UserManager extends Manager
 
         // getMultipleResults  --  Si le return de getMultipleResults est différent de null, alors le $mail testé existe déjà
         return  $this->getMultipleResults(DAO::select($sql, ['mail' => $mail]), $this->className) == null ? true : false;
+    }
+
+    // trouve le password de l'utilisateur dont le mail est $mail
+    public function findPasswordByMail($mail) {
+
+        $sql = "SELECT *
+                FROM user u
+                WHERE u.email = :mail";
+       
+        // la requête renvoie un seul enregistrement --> getOneOrNullResult
+        return  $this->getOneOrNullResult(
+            DAO::select($sql, ['mail' => $mail]), 
+            $this->className
+        );
     }
 }

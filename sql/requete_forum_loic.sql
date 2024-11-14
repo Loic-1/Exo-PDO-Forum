@@ -7,3 +7,8 @@ WHERE u.nickName = "ted"; -- current $pseudo
 SELECT *
 FROM user u
 WHERE u.email = "loic.vasile@test.fr"; -- current $mail
+
+-- used in findPasswordByMail
+SELECT u.password
+FROM user u
+WHERE u.email = "jeff@test.fr"; -- current $mail

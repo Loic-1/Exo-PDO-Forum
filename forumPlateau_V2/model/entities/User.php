@@ -9,8 +9,13 @@ use App\Entity;
 
 final class User extends Entity{
 
-    private $id;
-    private $nickName;
+    private int $id;
+    private string $nickName;
+    // private string $password;
+    // private $registrationDate;
+    // private string $avatar;
+    // private string $email;
+    // private bool $isBanned;
 
     public function __construct($data){         
         $this->hydrate($data);        
