@@ -4,5 +4,5 @@
 
     <input type="password" name="password" placeholder="MDP">
 
-    <input type="submit" value="S'enregistrer">
+    <input type="submit" value="Se connecter">
 </form>

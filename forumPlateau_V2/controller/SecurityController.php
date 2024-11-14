@@ -40,12 +40,23 @@ class SecurityController extends AbstractController
 
         return [
             "view" => VIEW_DIR . "forum/register.php",
-            "meta_description" => "Page de connexion"
+            "meta_description" => "Page d'inscription"
         ];
     }
 
     public function login()
     {
+
+        $userManager = new UserManager();
+
+        $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+        if ($mail && $password) {
+            var_dump($mail, $password);
+            die;
+        }
+
         return [
             "view" => VIEW_DIR . "forum/login.php",
             "meta_description" => "Page de connexion"
