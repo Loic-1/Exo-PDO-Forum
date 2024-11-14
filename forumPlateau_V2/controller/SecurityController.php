@@ -14,26 +14,22 @@ class SecurityController extends AbstractController
     {
         $userManager = new UserManager();
 
+        // on nettoie les inputs, par exemple FILTER_SANITIZE_FULL_SPECIAL_CHARS remplace < par &lt et > par &gt (pour éviter la faille XSS)
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
         $pass1 = filter_input(INPUT_POST, "pass1", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $pass2 = filter_input(INPUT_POST, "pass2", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if ($pseudo && $mail && $pass1 && $pass2) {
-            // Vérifier E-mail et Pseudo uniques
 
+            // on vérifie que $mail et $pseudo sont uniques
             if ($userManager->isUniqueMail($mail) && $userManager->isUniquePseudo($pseudo)) {
-                //  var_dump("test");
-                //  die;
 
                 // Longueur du mot de passe variable (12 comme exemple)
                 if ($pass1 === $pass2 && strlen($pass1) >= 12) {
 
-
-
+                    // bcrypt
                     $hash = password_hash($pass1, PASSWORD_DEFAULT);
-                    // var_dump($pseudo, $mail, $pass1, $pass2, $hash);
-                    // die;
 
                     $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
 
