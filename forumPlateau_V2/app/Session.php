@@ -33,6 +33,7 @@ class Session{
         $_SESSION["user"] = $user;
     }
 
+    // si user existe alors on le renvoie si,non on renvoie false
     public static function getUser(){
         return (isset($_SESSION['user'])) ? $_SESSION['user'] : false;
     }
