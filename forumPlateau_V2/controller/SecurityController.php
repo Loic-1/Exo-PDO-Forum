@@ -1,15 +1,17 @@
 <?php
+
 namespace Controller;
 
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\UserManager;
 
-class SecurityController extends AbstractController{
+class SecurityController extends AbstractController
+{
     // contiendra les méthodes liées à l'authentification : register, login et logout
 
-    public function register () {
-
+    public function register()
+    {
         $userManager = new UserManager();
 
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -20,14 +22,23 @@ class SecurityController extends AbstractController{
         if ($pseudo && $mail && $pass1 && $pass2) {
             // Vérifier E-mail et Pseudo uniques
 
-            // Longueur du mot de passe variable (12 comme exemple)
-            if ($pass1 === $pass2 && strlen($pass1) >= 12) {
-                
-                $hash = password_hash($pass1, PASSWORD_DEFAULT);
+            if ($userManager->isUniqueMail($mail) && $userManager->isUniquePseudo($pseudo)) {
+                //  var_dump("test");
+                //  die;
 
-                $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
+                // Longueur du mot de passe variable (12 comme exemple)
+                if ($pass1 === $pass2 && strlen($pass1) >= 12) {
 
-                $userManager->add($data);
+
+
+                    $hash = password_hash($pass1, PASSWORD_DEFAULT);
+                    // var_dump($pseudo, $mail, $pass1, $pass2, $hash);
+                    // die;
+
+                    $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
+
+                    $userManager->add($data);
+                }
             }
         }
 
@@ -36,6 +47,14 @@ class SecurityController extends AbstractController{
             "meta_description" => "Page de connexion"
         ];
     }
-    public function login () {}
-    public function logout () {}
+
+    public function login()
+    {
+        return [
+            "view" => VIEW_DIR . "forum/login.php",
+            "meta_description" => "Page de connexion"
+        ];
+    }
+
+    public function logout() {}
 }

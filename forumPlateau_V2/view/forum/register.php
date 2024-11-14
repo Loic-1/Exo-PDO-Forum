@@ -4,9 +4,9 @@
 
     <input type="mail" name="mail" placeholder="Adresse E-mail">
 
-    <input type="password" name="pass1" placeholder="MDP">
+    <input type="password" name="pass1" placeholder="MDP" value="aaaaaaaaaaaa">
 
-    <input type="password" name="pass2" placeholder="Confirmer MDP">
+    <input type="password" name="pass2" placeholder="Confirmer MDP" value="aaaaaaaaaaaa">
 
     <input type="submit" value="S'enregistrer">
 </form>
