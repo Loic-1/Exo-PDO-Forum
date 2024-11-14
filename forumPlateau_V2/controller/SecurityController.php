@@ -16,7 +16,7 @@ class SecurityController extends AbstractController
 
         // on nettoie les inputs, par exemple FILTER_SANITIZE_FULL_SPECIAL_CHARS remplace < par &lt et > par &gt (pour éviter la faille XSS)
         $pseudo = filter_input(INPUT_POST, "pseudo", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
-        $mail = filter_input(INPUT_POST, "mail", /*FILTER_SANITIZE_FULL_SPECIAL_CHARS, */FILTER_VALIDATE_EMAIL);
+        $mail = filter_input(INPUT_POST, "mail", /*FILTER_SANITIZE_FULL_SPECIAL_CHARS, */ FILTER_VALIDATE_EMAIL);
         $pass1 = filter_input(INPUT_POST, "pass1", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $pass2 = filter_input(INPUT_POST, "pass2", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
@@ -49,11 +49,14 @@ class SecurityController extends AbstractController
 
         $userManager = new UserManager();
 
-        $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        $mail = filter_input(INPUT_POST, "mail", FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_VALIDATE_EMAIL);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
         if ($mail && $password) {
-            var_dump($userManager->findPasswordByMail($mail));
+
+            $test = $userManager->findPasswordByMail($mail);
+
+            var_dump($test);
             die;
         }
 

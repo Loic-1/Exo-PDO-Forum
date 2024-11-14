@@ -11,11 +11,11 @@ final class User extends Entity{
 
     private int $id;
     private string $nickName;
-    // private string $password;
-    // private $registrationDate;
-    // private string $avatar;
-    // private string $email;
-    // private bool $isBanned;
+    private string $password;
+    private $registrationDate;
+    private string $avatar;
+    private string $email;
+    private bool $isBanned;
 
     public function __construct($data){         
         $this->hydrate($data);        
@@ -52,6 +52,56 @@ final class User extends Entity{
      */ 
     public function setNickName($nickName){
         $this->nickName = $nickName;
+
+        return $this;
+    }
+
+    public function getPassword(){
+        return $this->password;
+    }
+
+    public function setPassword($password){
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRegistrationDate(){
+        return $this->registrationDate;
+    }
+
+    public function setRegistrationDate($registrationDate){
+        $this->registrationDate = $registrationDate;
+
+        return $this;
+    }
+
+    public function getAvatar(){
+        return $this->avatar;
+    }
+
+    public function setAvatar($avatar){
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
+    public function getEmail(){
+        return $this->email;
+    }
+
+    public function setEmail($email){
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getPassword(){
+        return $this->password;
+    }
+
+    public function setPassword($password){
+        $this->password = $password;
 
         return $this;
     }
