@@ -96,12 +96,12 @@ final class User extends Entity{
         return $this;
     }
 
-    public function getPassword(){
-        return $this->password;
+    public function getIsBanned(){
+        return $this->isBanned;
     }
 
-    public function setPassword($password){
-        $this->password = $password;
+    public function setIsBanned($isBanned){
+        $this->isBanned = $isBanned;
 
         return $this;
     }
