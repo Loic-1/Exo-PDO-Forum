@@ -11,7 +11,7 @@ final class User extends Entity{
 
     private int $id;
     private string $nickName;
-    private string $password;
+    private ?string $password = null;
     private $registrationDate;
     private string $avatar;
     private string $email;
