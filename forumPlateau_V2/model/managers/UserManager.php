@@ -40,16 +40,16 @@ class UserManager extends Manager
     }
 
     // trouve le password de l'utilisateur dont le mail est $mail
-    public function findPasswordByMail($mail) {
+    public function findUserByMail($mail) {
 
         $sql = "SELECT *
-                FROM user u
-                WHERE u.email = :mail";
-       
-        // la requête renvoie un seul enregistrement --> getOneOrNullResult
-        return  $this->getOneOrNullResult(
-            DAO::select($sql, ['mail' => $mail]), 
-            $this->className
-        );
+        FROM ".$this->tableName." a
+        WHERE a.email = :mail
+        ";
+
+return $this->getOneOrNullResult(
+    DAO::select($sql, ['mail' => $mail], false), 
+    $this->className
+);
     }
 }

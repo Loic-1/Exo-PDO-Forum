@@ -54,12 +54,14 @@ class SecurityController extends AbstractController
 
         if ($mail && $password) {
 
-            $user = $userManager->findPasswordByMail($mail);
+            $user = $userManager->findUserByMail($mail); // SELECT *, donc renvoie un objet User
 
             $hashedPassword = $user->getPassword();
 
-            var_dump($hashedPassword);
-            die;
+            if (password_verify($password, $hashedPassword)) { // aaaaaaaaaaaa est la value de password dans register.php
+                var_dump("test");
+                die;
+            }
         }
 
         return [
