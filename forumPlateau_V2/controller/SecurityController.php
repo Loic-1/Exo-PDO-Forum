@@ -6,6 +6,7 @@ use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\UserManager;
 use App\Session;
+use Model\Entities\User;
 
 class SecurityController extends AbstractController
 {
@@ -32,11 +33,37 @@ class SecurityController extends AbstractController
                     // bcrypt
                     $hash = password_hash($pass1, PASSWORD_DEFAULT);
 
-                    $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
+                    $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail, "roles" => json_encode(['ROLE_USER'])];
 
-                    $user = $userManager->add($data);
+                    // var_dump($userManager);
+                    // var_dump($userManager->add($data));
+                    // die;
 
-                    $user->setRoles("ROLE_USER");
+                    // object $user
+                    $user = $userManager->findOneById($userManager->add($data));
+
+                    // var_dump($user);
+                    // die;
+
+                    // var_dump($user);
+                    // var_dump($user->setRoles("ROLE_USER"));
+                    // die;
+
+                    // $user->setRoles(['ROLE_ADMIN']);
+
+
+
+                                // $user->setRoles('ROLE_ADMIN');
+
+                                // var_dump($user);
+
+    
+
+                    // $_SESSION['user'] = $user;
+
+                     $this->redirectTo("home", "index");
+                    
+                
                 }
             }
         }

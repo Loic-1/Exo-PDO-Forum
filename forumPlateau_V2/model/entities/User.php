@@ -13,7 +13,7 @@ final class User extends Entity
 
     private int $id;
     private string $nickName;
-    private ?string $password = null;
+    private string $password;
     private $registrationDate;
     private string $avatar;
     private string $email;
@@ -124,26 +124,21 @@ final class User extends Entity
         return $this;
     }
 
-    /**
-     * Get the value of roles
-     */
     public function getRoles()
     {
         return $this->roles;
     }
 
-    /**
-     * Set the value of roles
-     *
-     * @return  self
-     */
-    public function setRoles($roles)
-    {
-        $rolesJSON = json_encode($roles);
+    public function setRoles($roles){
+           
+        $this->roles = json_decode($roles);
+        if(empty($this->roles)){
+            $this->roles[] = "ROLE_USER";
+        }
+    }
 
-        $this->roles = $rolesJSON;
-
-        return $this;
+    public function hasRole($role){
+        return in_array($role, $this->getRoles());
     }
 
     public function __toString()
@@ -151,32 +146,44 @@ final class User extends Entity
         return $this->nickName;
     }
 
-    public function hasRole($roleSearch): Bool
-    {
+    // public function hasRole($roleSearch): Bool
+    // {
 
-        // convertit le json roles en tableau roles
-        $roles = json_decode($this->roles, true);
+        // // convertit le json roles en tableau roles
+        // $roles = json_decode($this->roles, true);
 
-        // var_dump($roles);
-        // die;
+        // // var_dump($roles);
+        // // die;
 
-        // si $roles['roles'] est défini
-        if ($roles != null && isset($roles['roles'])) {
+        // // si $roles['roles'] est défini
+        // if ($roles != null && isset($roles['roles'])) {
 
-            var_dump("test");
-            die;
+        //     var_dump("test");
+        //     die;
 
-            // recherche sur tous les 'roles' $role de User dans $roles
-            foreach ($roles['roles'] as $role) {
-                if ($role == $roleSearch) {
+        //     // recherche sur tous les 'roles' $role de User dans $roles
+        //     foreach ($roles['roles'] as $role) {
+        //         if ($role == $roleSearch) {
 
-                    // il existe un $role $roleSearch
-                    return true;
-                }
-            }
-        }
+        //             // il existe un $role $roleSearch
+        //             return true;
+        //         }
+        //     }
+        // }
 
-        // pas de $role $roleSearch
-        return false;
-    }
+        // // pas de $role $roleSearch
+        // return false;
+
+
+        // Convertit le JSON 'roles' en tableau associatif
+        // $roles = json_decode($this->roles, true);
+
+        // Vérifie si la conversion est réussie et si la clé 'roles' existe
+        // if ($roles === null || !isset($roles['roles'])) {
+            // return false; // Pas de rôle ou JSON invalide
+        // }
+
+        // Recherche le rôle avec in_array pour simplifier
+    //     return in_array($roleSearch, $roles['roles'], true);
+    // }
 }
