@@ -1,4 +1,5 @@
 <?php
+
 namespace Model\Entities;
 
 use App\Entity;
@@ -7,7 +8,8 @@ use App\Entity;
     En programmation orientée objet, une classe finale (final class) est une classe que vous ne pouvez pas étendre, c'est-à-dire qu'aucune autre classe ne peut hériter de cette classe. En d'autres termes, une classe finale ne peut pas être utilisée comme classe parente.
 */
 
-final class User extends Entity{
+final class User extends Entity
+{
 
     private int $id;
     private string $nickName;
@@ -17,14 +19,16 @@ final class User extends Entity{
     private string $email;
     private bool $isBanned;
 
-    public function __construct($data){         
-        $this->hydrate($data);        
+    public function __construct($data)
+    {
+        $this->hydrate($data);
     }
 
     /**
      * Get the value of id
-     */ 
-    public function getId(){
+     */
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -32,16 +36,18 @@ final class User extends Entity{
      * Set the value of id
      *
      * @return  self
-     */ 
-    public function setId($id){
+     */
+    public function setId($id)
+    {
         $this->id = $id;
         return $this;
     }
 
     /**
      * Get the value of nickName
-     */ 
-    public function getNickName(){
+     */
+    public function getNickName()
+    {
         return $this->nickName;
     }
 
@@ -49,64 +55,87 @@ final class User extends Entity{
      * Set the value of nickName
      *
      * @return  self
-     */ 
-    public function setNickName($nickName){
+     */
+    public function setNickName($nickName)
+    {
         $this->nickName = $nickName;
 
         return $this;
     }
 
-    public function getPassword(){
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword($password){
+    public function setPassword($password)
+    {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getRegistrationDate(){
+    public function getRegistrationDate()
+    {
         return $this->registrationDate;
     }
 
-    public function setRegistrationDate($registrationDate){
+    public function setRegistrationDate($registrationDate)
+    {
         $this->registrationDate = $registrationDate;
 
         return $this;
     }
 
-    public function getAvatar(){
+    public function getAvatar()
+    {
         return $this->avatar;
     }
 
-    public function setAvatar($avatar){
+    public function setAvatar($avatar)
+    {
         $this->avatar = $avatar;
 
         return $this;
     }
 
-    public function getEmail(){
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email){
+    public function setEmail($email)
+    {
         $this->email = $email;
 
         return $this;
     }
 
-    public function getIsBanned(){
+    public function getIsBanned()
+    {
         return $this->isBanned;
     }
 
-    public function setIsBanned($isBanned){
+    public function setIsBanned($isBanned)
+    {
         $this->isBanned = $isBanned;
 
         return $this;
     }
 
-    public function __toString() {
+    public function hasRole($roleSearch)
+    {
+        $roles = json_decode($this->roles, true);
+        foreach ($roles['roles'] as $role) {
+            if($role == $roleSearch) {
+                return True;
+            }
+        }
+        return False;
+    }
+
+    public function __toString()
+    {
         return $this->nickName;
     }
 }

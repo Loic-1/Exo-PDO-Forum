@@ -54,8 +54,4 @@ class UserManager extends Manager
             $this->className
         );
     }
-
-    public function setUser($user) {
-        $this->setUser($user);
-    }
 }

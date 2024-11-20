@@ -5,6 +5,7 @@ namespace Controller;
 use App\AbstractController;
 use App\ControllerInterface;
 use Model\Managers\UserManager;
+use App\Session;
 
 class SecurityController extends AbstractController
 {
@@ -59,8 +60,10 @@ class SecurityController extends AbstractController
             $hashedPassword = $user->getPassword();
 
             if (password_verify($password, $hashedPassword)) { // aaaaaaaaaaaa est la value de password dans register.php
-                echo("ok");
-                $userManager->setUser($user);
+            
+                Session::setUser($user);
+                var_dump($_SESSION);
+                die;
             }
         }
 
@@ -70,5 +73,11 @@ class SecurityController extends AbstractController
         ];
     }
 
-    public function logout() {}
+    public function logout() {
+
+        return [
+            "view" => VIEW_DIR . "home.php",
+            "meta_description" => "Page d'accueil"
+        ];
+    }
 }
