@@ -18,6 +18,7 @@ final class User extends Entity
     private string $avatar;
     private string $email;
     private bool $isBanned;
+    private $roles;
 
     public function __construct($data)
     {
@@ -123,19 +124,59 @@ final class User extends Entity
         return $this;
     }
 
-    public function hasRole($roleSearch)
+    public function hasRole($roleSearch): Bool
     {
+
+        // convertit le json roles en tableau roles
         $roles = json_decode($this->roles, true);
-        foreach ($roles['roles'] as $role) {
-            if($role == $roleSearch) {
-                return True;
+
+        // var_dump($roles);
+        // die;
+
+        // si $roles['roles'] est défini
+        if ($roles != null && isset($roles['roles'])) {
+
+            var_dump("test");
+            die;
+
+            // recherche sur tous les 'roles' $role de User dans $roles
+            foreach ($roles['roles'] as $role) {
+                if ($role == $roleSearch) {
+
+                    // il existe un $role $roleSearch
+                    return true;
+                }
             }
+
+            // pas de $role $roleSearch
+            return false;
         }
-        return False;
+
+        return false;
     }
 
     public function __toString()
     {
         return $this->nickName;
+    }
+
+    /**
+     * Get the value of roles
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Set the value of roles
+     *
+     * @return  self
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 }

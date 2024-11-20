@@ -60,8 +60,9 @@ class SecurityController extends AbstractController
             $hashedPassword = $user->getPassword();
 
             if (password_verify($password, $hashedPassword)) { // aaaaaaaaaaaa est la value de password dans register.php
-            
+
                 Session::setUser($user);
+
                 var_dump($_SESSION);
                 die;
             }
@@ -73,7 +74,8 @@ class SecurityController extends AbstractController
         ];
     }
 
-    public function logout() {
+    public function logout()
+    {
 
         return [
             "view" => VIEW_DIR . "home.php",
