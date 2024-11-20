@@ -34,7 +34,9 @@ class SecurityController extends AbstractController
 
                     $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail];
 
-                    $userManager->add($data);
+                    $user = $userManager->add($data);
+
+                    $user->setRoles("ROLE_USER");
                 }
             }
         }
@@ -57,14 +59,14 @@ class SecurityController extends AbstractController
 
             $user = $userManager->findUserByMail($mail); // SELECT *, donc renvoie un objet User
 
-            $hashedPassword = $user->getPassword();
+            if ($user) {
+                $hashedPassword = $user->getPassword();
 
-            if (password_verify($password, $hashedPassword)) { // aaaaaaaaaaaa est la value de password dans register.php
+                if (password_verify($password, $hashedPassword)) { // aaaaaaaaaaaa est la value de password dans register.php
+                    Session::setUser($user);
 
-                Session::setUser($user);
-
-                var_dump($_SESSION);
-                die;
+                    $this->redirectTo("home", "index");
+                }
             }
         }
 
@@ -76,6 +78,7 @@ class SecurityController extends AbstractController
 
     public function logout()
     {
+        unset($_SESSION["user"]);
 
         return [
             "view" => VIEW_DIR . "home.php",

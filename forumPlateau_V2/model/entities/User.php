@@ -124,6 +124,33 @@ final class User extends Entity
         return $this;
     }
 
+    /**
+     * Get the value of roles
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    /**
+     * Set the value of roles
+     *
+     * @return  self
+     */
+    public function setRoles($roles)
+    {
+        $rolesJSON = json_encode($roles);
+
+        $this->roles = $rolesJSON;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->nickName;
+    }
+
     public function hasRole($roleSearch): Bool
     {
 
@@ -147,36 +174,9 @@ final class User extends Entity
                     return true;
                 }
             }
-
-            // pas de $role $roleSearch
-            return false;
         }
 
+        // pas de $role $roleSearch
         return false;
-    }
-
-    public function __toString()
-    {
-        return $this->nickName;
-    }
-
-    /**
-     * Get the value of roles
-     */
-    public function getRoles()
-    {
-        return $this->roles;
-    }
-
-    /**
-     * Set the value of roles
-     *
-     * @return  self
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 }
