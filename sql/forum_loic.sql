@@ -21,17 +21,17 @@ REPLACE INTO `category` (`id_category`, `name`) VALUES
 
 -- Listage des données de la table forum_loic.post : ~4 rows (environ)
 REPLACE INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
-	(122, 'test1', '2024-11-21 11:51:45', 60, 33),
-	(123, 'test2', '2024-11-21 11:51:55', 61, 33),
-	(124, 'test4', '2024-11-21 11:53:00', 62, 33),
-	(125, 'test4', '2024-11-21 11:53:10', 63, 33);
+	(131, 'test1', '2024-11-21 13:24:14', 69, 33),
+	(132, 'test2', '2024-11-21 13:24:30', 70, 33),
+	(133, 'test3', '2024-11-21 13:24:40', 71, 33),
+	(134, 'test4', '2024-11-21 13:24:47', 72, 33);
 
 -- Listage des données de la table forum_loic.topic : ~4 rows (environ)
 REPLACE INTO `topic` (`id_topic`, `title`, `creationDate`, `closed`, `category_id`, `user_id`) VALUES
-	(60, 'Topic1', '2024-11-21 11:51:45', 0, 1, NULL),
-	(61, 'Topic2', '2024-11-21 11:51:55', 0, 1, NULL),
-	(62, 'Topic3', '2024-11-21 11:53:00', 0, 2, NULL),
-	(63, 'Topic4', '2024-11-21 11:53:09', 0, 2, NULL);
+	(69, 'Topic1', '2024-11-21 13:24:14', 0, 1, 33),
+	(70, 'Topic2', '2024-11-21 13:24:30', 0, 1, 33),
+	(71, 'Topic3', '2024-11-21 13:24:40', 0, 2, 33),
+	(72, 'Topic4', '2024-11-21 13:24:47', 0, 2, 33);
 
 -- Listage des données de la table forum_loic.user : ~1 rows (environ)
 REPLACE INTO `user` (`id_user`, `nickName`, `password`, `registrationDate`, `roles`, `avatar`, `email`, `isBanned`) VALUES
