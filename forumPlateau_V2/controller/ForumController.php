@@ -93,7 +93,7 @@ class ForumController extends AbstractController implements ControllerInterface
             if ($text) {
 
                 // on crée le tableau associatif qui sera donné en paramètre à la fonction add()
-                $data = ["text" => $text, "topic_id" => $id];
+                $data = ["text" => $text, "topic_id" => $id, "user_id" => Session::getUser()->getId()];
 
                 // les clés et valeurs du tableau sont rajoutées à la BDD
                 $postManager->add($data);

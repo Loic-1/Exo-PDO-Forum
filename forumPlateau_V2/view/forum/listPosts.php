@@ -9,21 +9,29 @@ $posts = $result["data"]['posts'];
 <?php
 if ($posts) {
     foreach ($posts as $post) { ?>
-        <p><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?> <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer post</a> <a href="#">Modifier message</a>
+        <div><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?>
 
-        <form action="index.php?ctrl=forum&action=updatePostText&id=<?= $post->getId() ?>" method="post">
-            <input type="text" name="text" value="<?= $post ?>">
-            <input type="submit" value="Modifier">
-        </form>
 
-        </p>
+            <?php if (App\Session::getUser() == $post->getUser()) { ?>
+
+                <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer post</a>
+
+                <a href="#">Modifier message</a>
+
+                <form action="index.php?ctrl=forum&action=updatePostText&id=<?= $post->getId() ?>" method="post">
+                    <input type="text" name="text" value="<?= $post ?>">
+                    <input type="submit" value="Modifier">
+                </form>
+
+            <?php } else { ?>
+                <p>Il n'y a pas de Posts dans ce topic ☺☻</p>
+            <?php } ?>
+        </div>
     <?php }
-} else { ?>
-    <p>Il n'y a pas de Posts dans ce topic ☺☻</p>
-<?php }
-?>
-
-<form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post">
-    <input type="text" name="text" placeholder="Message">
-    <input type="submit" value="Poster">
-</form>
+}
+if (App\Session::getUser()) { ?>
+    <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post">
+        <input type="text" name="text" placeholder="Message">
+        <input type="submit" value="Poster">
+    </form>
+<?php } ?>

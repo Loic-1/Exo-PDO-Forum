@@ -7,6 +7,7 @@ use App\Entity;
 final class Post extends Entity
 {
     private $id;
+
     private $text;
     private $creationDate;
     private $topic;
