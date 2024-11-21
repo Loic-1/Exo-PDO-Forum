@@ -130,7 +130,7 @@ class ForumController extends AbstractController implements ControllerInterface
             if ($title && $text) {
 
                 // on crée le tableau associatif qui sera donné en paramètre à la fonction add()
-                $dataTitle = ["title" => $title, "category_id" => $id];
+                $dataTitle = ["title" => $title, "category_id" => $id, "user_id" => Session::getUser()->getId()];
 
                 $topicId = $topicManager->add($dataTitle);
 

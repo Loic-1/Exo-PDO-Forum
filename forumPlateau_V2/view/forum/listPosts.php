@@ -11,8 +11,10 @@ if ($posts) {
     foreach ($posts as $post) { ?>
         <div><?= $post ?> par <?= $post->getUser() ?>, le <?= $post->getCreationDate() ?>
 
-
-            <?php if (App\Session::getUser() == $post->getUser()) { ?>
+            <?php
+            // si le user connecté est l'auteur du post
+            if (App\Session::getUser() == $post->getUser()) {
+            ?>
 
                 <a href="index.php?ctrl=forum&action=deletePost&id=<?= $post->getId() ?>">Supprimer post</a>
 
@@ -26,10 +28,12 @@ if ($posts) {
             <?php }  ?>
         </div>
     <?php }
+    // Il n'y a pas de posts dans ce topic
 } else { ?>
     <p>Il n'y a pas de Posts dans ce topic ☺☻</p>
 <?php }
-if (App\Session::getUser()) { ?>
+if (App\Session::getUser()) {
+?>
     <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post">
         <input type="text" name="text" placeholder="Message">
         <input type="submit" value="Poster">
