@@ -39,6 +39,9 @@ class SecurityController extends AbstractController
 
                     // $user->setRoles('ROLE_ADMIN');
 
+                    var_dump($user->addRole("ROLE_ADMIN"));
+                    die;
+
                     $this->redirectTo("home", "index");
                 }
             }

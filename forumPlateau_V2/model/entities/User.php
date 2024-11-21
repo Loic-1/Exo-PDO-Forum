@@ -12,15 +12,13 @@ final class User extends Entity
 {
 
     private int $id;
-
-
     private string $nickName;
     private string $password;
     private $registrationDate;
     private string $avatar;
     private string $email;
     private bool $isBanned;
-    private $roles;
+    public $roles;
 
     public function __construct($data)
     {
@@ -137,6 +135,35 @@ final class User extends Entity
         if (empty($this->roles)) {
             $this->roles[] = "ROLE_USER";
         }
+    }
+
+    // public function setRoles($roles)
+    // {
+    //     // Decode JSON roles into an array
+    //     $decodedRoles = json_decode($roles, true); // 'true' converts to associative array
+    //     if (!is_array($decodedRoles)) {
+    //         $decodedRoles = [];
+    //     }
+
+    //     // Always ensure the "ROLE_USER" is present
+    //     if (!in_array("ROLE_USER", $decodedRoles, true)) {
+    //         $decodedRoles[] = "ROLE_USER";
+    //     }
+
+    //     // Add "ROLE_ADMIN" if needed
+    //     if (!in_array("ROLE_ADMIN", $decodedRoles, true)) {
+    //         $decodedRoles[] = "ROLE_ADMIN";
+    //     }
+
+    //     // Encode the roles back to JSON and set the property
+    //     $this->roles = $decodedRoles;
+    // }
+
+    public function addRole(string $role) {
+
+        $rolesDecode = json_decode($this->roles, true);
+
+        return $rolesDecode;
     }
 
     public function hasRole($role)
