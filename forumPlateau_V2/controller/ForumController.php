@@ -78,55 +78,108 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addPost($id) // id de topic
     {
 
-        $postManager = new PostManager;
+        $this->restrictTo("ROLE_USER");
 
-        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        // si du texte est envoyé
+        if (!empty($_POST)) {
 
-        $data = ["text" => $text, "topic_id" => $id];
+            $postManager = new PostManager;
 
-        $postManager->add($data);
+            // on "nettoie" les inputs (ex: '<' devient &lt et '>' devient &gt et '&' devient &amp) pour empêcher les failles XSS
+            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-        $this->redirectTo('forum', 'listPostsByTopic', $id);
+            // si le champ est rempli
+            if ($text) {
+
+                // on crée le tableau associatif qui sera donné en paramètre à la fonction add()
+                $data = ["text" => $text, "topic_id" => $id];
+
+                // les clés et valeurs du tableau sont rajoutées à la BDD
+                $postManager->add($data);
+
+                Session::addFlash("success", "Nouveau message ajouté !");
+
+                $this->redirectTo('forum', 'listPostsByTopic', $id);
+            } else {
+
+                Session::addFlash("error", "Un problème est survenu, veuillez réessayer.");
+            }
+        }
+        $this->redirectTo("forum", "listPostsByTopic", $id);
     }
 
     // add topic title and first message
     public function addTopic($id) // id de category
     {
 
-        $topicManager = new TopicManager();
-        $postManager = new PostManager;
+        $this->restrictTo("ROLE_USER");
 
-        $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        // si du texte est envoyé
+        if (!empty($_POST)) {
 
-        $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+            $topicManager = new TopicManager();
+            $postManager = new PostManager();
 
-        if ($title && $text) {
+            // on "nettoie" les inputs (ex: '<' devient &lt et '>' devient &gt et '&' devient &amp) pour empêcher les failles XSS
+            $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $dataTitle = ["title" => $title, "category_id" => $id];
+            $text = filter_input(INPUT_POST, 'text', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-            $topicId = $topicManager->add($dataTitle);
+            // si les deux champs sont remplis
+            if ($title && $text) {
 
-            $dataMessage = ["text" => $text, "topic_id" => $topicId];
+                // on crée le tableau associatif qui sera donné en paramètre à la fonction add()
+                $dataTitle = ["title" => $title, "category_id" => $id];
 
-            $postManager->add($dataMessage);
+                $topicId = $topicManager->add($dataTitle);
 
-            $this->redirectTo('forum', 'listTopicsByCategory', $id);
+                $dataMessage = ["text" => $text, "topic_id" => $topicId];
+
+                $postManager->add($dataMessage);
+
+                Session::addFlash("success", "Nouveau post & message ajoutés !");
+
+                $this->redirectTo('forum', 'listTopicsByCategory', $id);
+            }
+            // Si les deux champs ne sont pas remplis
+            else {
+
+                Session::addFlash("error", "Quelque chose s'est mal passé");
+            }
         }
-        // if one of the two fields is null
         $this->redirectTo('forum', 'listTopicsByCategory', $id);
     }
 
     public function addCategory()
     {
 
-        $categoryManager = new CategoryManager;
+        $this->restrictTo("ROLE_ADMIN");
 
-        // changes '<', '>', '&' into '&lt', '&gt', '&amp'
-        $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (!empty($_POST)) {
 
-        $data = ["name" => $name];
+            $categoryManager = new CategoryManager;
 
-        $categoryManager->add($data);
+            // on "nettoie" les inputs (ex: '<' devient &lt et '>' devient &gt et '&' devient &amp) pour empêcher les failles XSS
+            $name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            // si $name n'est pas NULL
+            if ($name) {
+
+                // on crée le tableau associatif qui sera donné en paramètre à la fonction add()
+                $data = ["name" => $name];
+
+                $categoryManager->add($data);
+
+                Session::addFlash("success", "La catégorie a bien été rajoutée !");
+
+                $this->redirectTo('forum', 'index');
+            }
+            // $name n'était pas rempli
+            else {
+
+                Session::addFlash("error", "Quelque chose s'est mal passé");
+            }
+        }
 
         $this->redirectTo('forum', 'index');
     }
@@ -138,57 +191,102 @@ class ForumController extends AbstractController implements ControllerInterface
     public function deletePost($id)
     {
 
+        $this->restrictTo("ROLE_USER");
+
         $postManager = new PostManager;
         $post = $postManager->findOneById($id);
 
-        // if (isset($_POST['id'])) {
-        $postManager->delete($id);
+        if (isset($_POST)) {
+
+            $postManager->delete($id);
+
+            Session::addFlash("success", "Le message a bien été supprimé !");
+
+            $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
+        }
+
         $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
-        // }
     }
 
     public function deleteTopic($id)
     {
 
+        $this->restrictTo("ROLE_USER");
+
         $topicManager = new TopicManager;
         $topic = $topicManager->findOneById($id);
 
-        // if (isset($_POST['id'])) {
-        $topicManager->delete($id);
-        $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
-        // }
-    }
+        if (isset($_POST)) {
 
-    // public function deleteCategory($id) { }
+            $topicManager->delete($id);
+
+            Session::addFlash("success", "Le Topic a bien été posté");
+
+            $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
+        }
+
+        $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
+    }
 
 
     //-------------------FONCTIONS UPDATE---------------------
 
 
-    public function updatePostText($id) : void {
+    public function updatePostText($id): void
+    {
 
-        $postManager = new PostManager();
-        $post = $postManager->findOneById($id);
+        $this->restrictTo("ROLE_USER");
 
-        $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if ($_POST) {
 
-        $data = ["text" => $text];
+            $postManager = new PostManager();
+            $post = $postManager->findOneById($id);
 
-        $postManager->update($data, $id);
+            $text = filter_input(INPUT_POST, "text", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if ($text) {
+
+                $data = ["text" => $text];
+
+                $postManager->update($data, $id);
+
+                Session::addFlash("success", "Le message a bien été modifié !");
+
+                $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
+            } else {
+
+                Session::addFlash("error", "Quelque chose s'est mal passé");
+            }
+        }
 
         $this->redirectTo('forum', 'listPostsByTopic', $post->getTopic()->getId());
     }
 
-    public function updateTopicTitle($id) {
-        
-        $topicManager = new TopicManager();
-        $topic = $topicManager->findOneById($id);
+    public function updateTopicTitle($id)
+    {
+        $this->restrictTo("ROLE_USER");
 
-        $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+        if (!empty($_POST)) {
 
-        $data = ["title" => $title];
+            $topicManager = new TopicManager();
+            $topic = $topicManager->findOneById($id);
 
-        $topicManager->update($data, $id);
+            $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+
+            if ($title) {
+
+                $data = ["title" => $title];
+
+                $topicManager->update($data, $id);
+
+                Session::addFlash("success", "Le topic a bien été changé !");
+
+                $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
+            } else {
+
+                Session::addFlash("error", "Quelque chose s'est mal passé");
+            }
+        }
 
         $this->redirectTo('forum', 'listTopicsByCategory', $topic->getCategory()->getId());
     }

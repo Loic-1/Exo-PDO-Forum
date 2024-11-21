@@ -35,35 +35,11 @@ class SecurityController extends AbstractController
 
                     $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail, "roles" => json_encode(['ROLE_USER'])];
 
-                    // var_dump($userManager);
-                    // var_dump($userManager->add($data));
-                    // die;
-
-                    // object $user
                     $user = $userManager->findOneById($userManager->add($data));
 
-                    // var_dump($user);
-                    // die;
+                    // $user->setRoles('ROLE_ADMIN');
 
-                    // var_dump($user);
-                    // var_dump($user->setRoles("ROLE_USER"));
-                    // die;
-
-                    // $user->setRoles(['ROLE_ADMIN']);
-
-
-
-                                // $user->setRoles('ROLE_ADMIN');
-
-                                // var_dump($user);
-
-    
-
-                    // $_SESSION['user'] = $user;
-
-                     $this->redirectTo("home", "index");
-                    
-                
+                    $this->redirectTo("home", "index");
                 }
             }
         }
