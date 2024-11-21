@@ -23,12 +23,12 @@ if ($posts) {
                     <input type="submit" value="Modifier">
                 </form>
 
-            <?php } else { ?>
-                <p>Il n'y a pas de Posts dans ce topic ☺☻</p>
-            <?php } ?>
+            <?php }  ?>
         </div>
     <?php }
-}
+} else { ?>
+    <p>Il n'y a pas de Posts dans ce topic ☺☻</p>
+<?php }
 if (App\Session::getUser()) { ?>
     <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post">
         <input type="text" name="text" placeholder="Message">

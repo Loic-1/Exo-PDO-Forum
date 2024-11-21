@@ -134,7 +134,7 @@ class ForumController extends AbstractController implements ControllerInterface
 
                 $topicId = $topicManager->add($dataTitle);
 
-                $dataMessage = ["text" => $text, "topic_id" => $topicId];
+                $dataMessage = ["text" => $text, "topic_id" => $topicId, "user_id" => Session::getUser()->getId()];
 
                 $postManager->add($dataMessage);
 
