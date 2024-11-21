@@ -38,8 +38,7 @@ class SecurityController extends AbstractController
 
                     $user = $userManager->findOneById($userManager->add($data));
 
-                    // $user->setRoles('ROLE_ADMIN');
-
+                    var_dump($user->getRoles());
                     var_dump($user->addRole("ROLE_ADMIN"));
                     die;
 

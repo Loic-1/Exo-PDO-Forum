@@ -162,18 +162,24 @@ final class User extends Entity
     public function addRole(string $role) {
 
         // converts json string to php array
-        // $rolesDecode = json_decode($this->roles, true);
+        $rolesDecode = json_decode($this->roles, true);
 
-        $rolesDecode = ["ROLE_USER"];
-
-        // si $role est null, alors $rolesdecode sera null, il faut donc le déclarer en tant qu'array
+        // si $role est null, alors $rolesdecode sera null
         if (!is_array($rolesDecode)) {
+
+            // il faut donc déclarer $rolesDecode en tant qu'array
             $rolesDecode = [];
         }
 
-        array_push($rolesDecode, $role);
+        // si le rôle n'est pas déjà attribué
+        if (!in_array($role, $rolesDecode, true)) {
 
-        return json_encode($rolesDecode);
+            // rajoute le nouveau rôle dans $rolesDecode
+            array_push($rolesDecode, $role);
+        }
+
+        // on encode et on met à jour l'attribut $roles
+        $this->roles = json_encode($rolesDecode);
     }
 
     public function hasRole($role)
