@@ -14,6 +14,7 @@ class SecurityController extends AbstractController
 
     public function register()
     {
+
         $userManager = new UserManager();
 
         // on nettoie les inputs, par exemple FILTER_SANITIZE_FULL_SPECIAL_CHARS remplace < par &lt et > par &gt (pour éviter la faille XSS)

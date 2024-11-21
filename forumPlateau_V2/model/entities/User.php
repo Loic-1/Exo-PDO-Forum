@@ -161,9 +161,19 @@ final class User extends Entity
 
     public function addRole(string $role) {
 
-        $rolesDecode = json_decode($this->roles, true);
+        // converts json string to php array
+        // $rolesDecode = json_decode($this->roles, true);
 
-        return $rolesDecode;
+        $rolesDecode = ["ROLE_USER"];
+
+        // si $role est null, alors $rolesdecode sera null, il faut donc le déclarer en tant qu'array
+        if (!is_array($rolesDecode)) {
+            $rolesDecode = [];
+        }
+
+        array_push($rolesDecode, $role);
+
+        return json_encode($rolesDecode);
     }
 
     public function hasRole($role)
