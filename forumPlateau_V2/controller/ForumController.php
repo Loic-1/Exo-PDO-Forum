@@ -78,6 +78,7 @@ class ForumController extends AbstractController implements ControllerInterface
     public function addPost($id) // id de topic
     {
 
+        // seul les users avec le rôle "ROLE_USER" (donc ceux avec un compte) pourront utiliser cette action
         $this->restrictTo("ROLE_USER");
 
         // si du texte est envoyé
