@@ -51,49 +51,31 @@ class ForumController extends AbstractController implements ControllerInterface
             ]
         ];
     }
-    
+
     public function listPostsByTopic($id)
     {
-        
+
         $topicManager = new TopicManager();
         $postManager = new PostManager();
         // pour mettre topic->getId() dans l'url de submitForm
         $topic = $topicManager->findOneById($id);
         // Model\Managers\PostManager;
         $posts = $postManager->findPostsByTopic($id);
-        
+
         return [
             "view" => VIEW_DIR . "forum/listPosts.php",
             "meta_description" => "Liste des messages par sujet : ",
             "data" => [
                 "topic" => $topic,
                 "posts" => $posts
-                ]
-            ];
-        }
-        
-            public function users() {
-        
-                // $userManager = new UserManager();
-                // $users = $userManager->findAll();
+            ]
+        ];
+    }
 
-                
-        
-                return [
-                    "view" => VIEW_DIR . "forum/users.php",
-                    "meta_description" => "Liste des utilisateurs",
-                    "data" => [
-                        "users" => 3 // $users
-                    ]
-                ];
-                // var_dump($userManager->findAll());
-                // die;
-            }
-        
-        
-        //-------------------FONCTIONS ADD---------------------
-        
-        
+
+    //-------------------FONCTIONS ADD---------------------
+
+
     public function addPost($id) // id de topic
     {
 
