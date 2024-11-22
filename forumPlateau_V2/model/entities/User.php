@@ -159,23 +159,55 @@ final class User extends Entity
     //     $this->roles = $decodedRoles;
     // }
 
-    public function addRole(string $role) {
+    // public function addRole(string $role) {
+
+    //     // converts json string to php array
+    //     $rolesDecode = json_decode($this->roles, true);
+
+    //     // $rolesDecode = ["ROLE_USER"];
+
+    //     // si $role est null, alors $rolesdecode sera null
+    //     if (!is_array($rolesDecode)) {
+
+    //         // il faut donc déclarer $rolesDecode en tant qu'array
+    //         $rolesDecode = [];
+    //     }
+
+    //     // si le rôle n'est pas déjà attribué
+    //     if (!in_array($role, $rolesDecode, true)) {
+
+    //         // rajoute le nouveau rôle dans $rolesDecode
+    //         array_push($rolesDecode, $role);
+    //     }
+
+    //     // on encode et on met à jour l'attribut $roles
+    //     $this->roles = json_encode($rolesDecode);
+    // }
+
+    public function addRole(string $role)
+    {
+        // si le array rentré est vide ou n'est pas du json
+        if (empty($this->roles) || !is_string($this->roles)) {
+
+            // on initialise un array qu'on encode en json
+            $this->roles = json_encode(["ROLE_USER"]);
+        }
 
         // converts json string to php array
         $rolesDecode = json_decode($this->roles, true);
 
-        // si $role est null, alors $rolesdecode sera null
+        // si $rolesDecode est vide (redondant)
         if (!is_array($rolesDecode)) {
 
-            // il faut donc déclarer $rolesDecode en tant qu'array
-            $rolesDecode = [];
+            // on le déclare
+            $rolesDecode = ["ROLE_USER"];
         }
 
         // si le rôle n'est pas déjà attribué
         if (!in_array($role, $rolesDecode, true)) {
 
             // rajoute le nouveau rôle dans $rolesDecode
-            array_push($rolesDecode, $role);
+            array_push($rolesDecode, $role)/* $rolesDecode[] = $role*/;
         }
 
         // on encode et on met à jour l'attribut $roles

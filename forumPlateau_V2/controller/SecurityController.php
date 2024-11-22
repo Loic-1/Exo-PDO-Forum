@@ -34,14 +34,43 @@ class SecurityController extends AbstractController
                     // bcrypt
                     $hash = password_hash($pass1, PASSWORD_DEFAULT);
 
-                    $data = ["nickName" => $pseudo, "password" => $hash, "email" => $mail, "roles" => json_encode(['ROLE_USER'])];
+                    $data = [
+                        "nickName" => $pseudo,
+                        "password" => $hash,
+                        "email" => $mail,
+                        "roles" => json_encode(['ROLE_USER'])
+                    ];
 
-                    $user = $userManager->findOneById($userManager->add($data));
+                    // on trouve $userId grâce à lastInsertIndex()
+                    $userId = $userManager->add($data);
 
-                    var_dump($user->getRoles());
-                    var_dump($user->addRole("ROLE_ADMIN"));
-                    die;
 
+                    // A partir de là jusqu'au redirect, ce bout de code servira à donner le rôle admin à un user (sûrement depuis users())
+
+                    // on trouve le bon user grâce à $userId
+                    $user = $userManager->findOneById($userId);
+
+                    // on rajoute le rôle admin
+                    $user->addRole("ROLE_ADMIN");
+
+                    // on redéfinit l'array $data pour update()
+                    $data = [
+                        "nickName" => $user->getNickName(),
+                        "password" => $user->getPassword(),
+                        "email" => $user->getEmail(),
+                        "roles" => $user->getRoles()
+                    ];
+
+                    //// $data bien mis à jour
+
+                    // var_dump($user->getRoles()); // '["ROLE_USER","ROLE_ADMIN"]'
+                    // var_dump($data['roles']); // '["ROLE_USER","ROLE_ADMIN"]'
+                    // die;
+
+                    // on update le user à $userId
+                    $userManager->update($data, $userId);
+
+                    // on redirige vers la page d'accueil
                     $this->redirectTo("home", "index");
                 }
             }
