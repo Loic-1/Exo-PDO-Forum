@@ -214,6 +214,40 @@ final class User extends Entity
         $this->roles = json_encode($rolesDecode);
     }
 
+    public function removeRole(string $role)
+    {
+        // si le array rentré est vide ou n'est pas du json
+        if (empty($this->roles) || !is_string($this->roles)) {
+
+            // on initialise un array qu'on encode en json
+            $this->roles = json_encode(["ROLE_USER"]);
+        }
+
+        // converts json string to php array
+        $rolesDecode = json_decode($this->roles, true);
+
+        // si $rolesDecode est vide (redondant)
+        if (!is_array($rolesDecode)) {
+
+            // on le déclare
+            $rolesDecode = ["ROLE_USER"];
+        }
+
+        // si le rôle n'est pas déjà attribué
+        if (!in_array($role, $rolesDecode, true)) {
+
+            for ($i = 0; $i < count($rolesDecode); $i++) {
+
+                if ($rolesDecode[$i] === $role) {
+                    array_splice($rolesDecode, $i, 1);
+                }
+            }
+        }
+
+        // on encode et on met à jour l'attribut $roles
+        $this->roles = json_encode($rolesDecode);
+    }
+
     public function hasRole($role)
     {
         return in_array($role, $this->getRoles());

@@ -35,7 +35,7 @@ if ($posts) {
 if (App\Session::getUser()) {
 ?>
     <form action="index.php?ctrl=forum&action=addPost&id=<?= $topic->getId() ?>" method="post">
-        <input type="text" name="text" placeholder="Message">
+        <textarea name="text" placeholder="Message"></textarea>
         <input type="submit" value="Poster">
     </form>
 <?php } ?>

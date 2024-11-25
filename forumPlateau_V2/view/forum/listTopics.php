@@ -36,7 +36,7 @@ if (App\Session::getUser()) {
 ?>
     <form action="index.php?ctrl=forum&action=addTopic&id=<?= $category->getId() ?>" method="post">
         <input type="text" name="title" placeholder="Titre">
-        <input type="text" name="text" placeholder="Premier message">
+        <textarea name="text" placeholder="Premier message"></textarea>
         <input type="submit" value="Créer">
     </form>
 <?php } ?>

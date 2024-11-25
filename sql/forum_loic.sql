@@ -24,13 +24,12 @@ CREATE TABLE IF NOT EXISTS `category` (
   `id_category` int NOT NULL AUTO_INCREMENT,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL,
   PRIMARY KEY (`id_category`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.category : ~2 rows (environ)
-DELETE FROM `category`;
 INSERT INTO `category` (`id_category`, `name`) VALUES
-	(1, 'category1'),
-	(2, 'category2');
+	(30, 'Cat&eacute;gorie1'),
+	(31, 'Cat&eacute;gorie2');
 
 -- Listage de la structure de table forum_loic. post
 CREATE TABLE IF NOT EXISTS `post` (
@@ -44,15 +43,14 @@ CREATE TABLE IF NOT EXISTS `post` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_post_topic` FOREIGN KEY (`topic_id`) REFERENCES `topic` (`id_topic`) ON DELETE CASCADE,
   CONSTRAINT `FK_post_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.post : ~4 rows (environ)
-DELETE FROM `post`;
 INSERT INTO `post` (`id_post`, `text`, `creationDate`, `topic_id`, `user_id`) VALUES
-	(97, 'test', '2024-11-14 11:04:09', 49, NULL),
-	(98, 'test', '2024-11-14 11:04:16', 50, NULL),
-	(99, 'test', '2024-11-14 11:04:29', 51, NULL),
-	(100, 'test', '2024-11-14 11:04:34', 52, NULL);
+	(101, 'test1', '2024-11-25 08:50:53', 53, 32),
+	(102, 'test2', '2024-11-25 08:51:02', 54, 32),
+	(103, 'test3', '2024-11-25 08:51:38', 55, 33),
+	(104, 'test4', '2024-11-25 08:51:46', 56, 33);
 
 -- Listage de la structure de table forum_loic. topic
 CREATE TABLE IF NOT EXISTS `topic` (
@@ -67,15 +65,14 @@ CREATE TABLE IF NOT EXISTS `topic` (
   KEY `user_id` (`user_id`),
   CONSTRAINT `FK_topic_category` FOREIGN KEY (`category_id`) REFERENCES `category` (`id_category`) ON DELETE CASCADE,
   CONSTRAINT `FK_topic_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id_user`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.topic : ~4 rows (environ)
-DELETE FROM `topic`;
 INSERT INTO `topic` (`id_topic`, `title`, `creationDate`, `closed`, `category_id`, `user_id`) VALUES
-	(49, 'Topic1', '2024-11-14 11:04:09', 0, 1, NULL),
-	(50, 'Topic2', '2024-11-14 11:04:16', 0, 1, NULL),
-	(51, 'Topic3', '2024-11-14 11:04:28', 0, 2, NULL),
-	(52, 'Topic4', '2024-11-14 11:04:34', 0, 2, NULL);
+	(53, 'Topic1', '2024-11-25 08:50:53', 0, 30, 32),
+	(54, 'Topic2', '2024-11-25 08:51:02', 0, 30, 32),
+	(55, 'Topic3', '2024-11-25 08:51:38', 0, 31, 33),
+	(56, 'Topic4', '2024-11-25 08:51:46', 0, 31, 33);
 
 -- Listage de la structure de table forum_loic. user
 CREATE TABLE IF NOT EXISTS `user` (
@@ -84,20 +81,19 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci NOT NULL DEFAULT '',
   `registrationDate` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `roles` json DEFAULT NULL,
-  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT '',
   `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_swedish_ci DEFAULT NULL,
   `isBanned` tinyint DEFAULT '0',
   PRIMARY KEY (`id_user`),
   UNIQUE KEY `nickName` (`nickName`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_swedish_ci;
 
 -- Listage des données de la table forum_loic.user : ~3 rows (environ)
-DELETE FROM `user`;
 INSERT INTO `user` (`id_user`, `nickName`, `password`, `registrationDate`, `roles`, `avatar`, `email`, `isBanned`) VALUES
-	(28, 'jeff', '$2y$10$YZpP6lZR4DU2uG3i.fhrb.15HABwYrO8KU6.k5ssxDNVvDoBYZaE6', '2024-11-14 11:02:57', NULL, NULL, 'jeff@test.fr', 0),
-	(29, 'todd', '$2y$10$mFebq8CmX5LYL1VK1xwwKOrZAZAUjacx9sXNW0Ce4CdXDbktFoBHW', '2024-11-14 11:03:03', NULL, NULL, 'todd@test.fr', 0),
-	(30, 'ted', '$2y$10$aSWlryEV0E6.Hlap7B5M3OI0XOpLTGQgOxKnvGTHw7a4mbkQn5fiS', '2024-11-14 11:03:15', NULL, NULL, 'te', 0);
+	(32, 'user1', '$2y$10$CxbaxNb1m5.O9UwdUQt1mOwmvbcov3E4RCm4n9gC3r2OofT9xQRk.', '2024-11-25 08:47:08', '["ROLE_USER", "ROLE_ADMIN"]', '', 'user1@test.fr', 0),
+	(33, 'user2', '$2y$10$gDtHbUKIUYRbN/Hpom221.3uMBM17mKGgSXX4JbqEdBwWMtDed4NO', '2024-11-25 08:47:29', '["ROLE_USER", "ROLE_ADMIN"]', '', 'user2@test.fr', 0),
+	(34, 'user3', '$2y$10$GENoZEzmn0i/f6HRBPe1iePlLvB7VkETuNVHugx5IQ5xzDpKAi1hq', '2024-11-25 09:36:50', '["ROLE_USER"]', '', 'user3@test.fr', 0);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

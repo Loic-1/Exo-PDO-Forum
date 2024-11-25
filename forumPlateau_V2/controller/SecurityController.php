@@ -42,33 +42,7 @@ class SecurityController extends AbstractController
                     ];
 
                     // on trouve $userId grâce à lastInsertIndex()
-                    $userId = $userManager->add($data);
-
-
-                    // A partir de là jusqu'au redirect, ce bout de code servira à donner le rôle admin à un user (sûrement depuis users())
-
-                    // on trouve le bon user grâce à $userId
-                    $user = $userManager->findOneById($userId);
-
-                    // on rajoute le rôle admin
-                    $user->addRole("ROLE_ADMIN");
-
-                    // on redéfinit l'array $data pour update()
-                    $data = [
-                        "nickName" => $user->getNickName(),
-                        "password" => $user->getPassword(),
-                        "email" => $user->getEmail(),
-                        "roles" => $user->getRoles()
-                    ];
-
-                    //// $data bien mis à jour
-
-                    // var_dump($user->getRoles()); // '["ROLE_USER","ROLE_ADMIN"]'
-                    // var_dump($data['roles']); // '["ROLE_USER","ROLE_ADMIN"]'
-                    // die;
-
-                    // on update le user à $userId
-                    $userManager->update($data, $userId);
+                    $userManager->add($data);
 
                     // on redirige vers la page d'accueil
                     $this->redirectTo("home", "index");
@@ -121,17 +95,88 @@ class SecurityController extends AbstractController
         ];
     }
 
-    public function profile($id) {
+    public function profile($id)
+    {
 
         $userManager = new UserManager();
         $user = $userManager->findOneById($id);
 
         return [
             "view" => VIEW_DIR . "security/profile.php",
-            "meta_description" => "Page d'accueil",
+            "meta_description" => "Page de profil",
             "data" => [
                 "user" => $user
             ]
         ];
+    }
+
+    public function promoteToAdmin($id)
+    {
+
+        $userManager = new UserManager();
+        $user = $userManager->findOneById($id);
+
+        // si $user existe
+        if ($user) {
+
+            // on rajoute le rôle admin
+            $user->addRole("ROLE_ADMIN");
+
+            // on définit l'array $data pour update()
+            $data = [
+                "nickName" => $user->getNickName(),
+                "password" => $user->getPassword(),
+                "email" => $user->getEmail(),
+                "roles" => $user->getRoles()
+            ];
+
+            Session::getFlash("success", "test");
+
+            // on update le user à $userId
+            $userManager->update($data, $user->getId());
+        }
+
+        // si $user n'est pas
+        else {
+            Session::getFlash("error", "Quelque chose s'est mal passé ☻");
+        }
+
+        // redirection vers l'action users qui redirige vers security/users.php
+        $this->redirectTo("home", "users");
+    }
+
+    public function demoteFromAdmin($id)
+    {
+
+        $userManager = new UserManager();
+        $user = $userManager->findOneById($id);
+
+        // si $user existe
+        if ($user) {
+
+            // on rajoute le rôle admin
+            $user->removeRole("ROLE_ADMIN");
+
+            // on définit l'array $data pour update()
+            $data = [
+                "nickName" => $user->getNickName(),
+                "password" => $user->getPassword(),
+                "email" => $user->getEmail(),
+                "roles" => $user->getRoles()
+            ];
+
+            Session::getFlash("success", "test");
+
+            // on update le user à $userId
+            $userManager->update($data, $user->getId());
+        }
+
+        // si $user n'est pas
+        else {
+            Session::getFlash("error", "Quelque chose s'est mal passé ☻");
+        }
+
+        // redirection vers l'action users qui redirige vers security/users.php
+        $this->redirectTo("home", "users");
     }
 }
