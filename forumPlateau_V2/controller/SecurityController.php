@@ -120,4 +120,18 @@ class SecurityController extends AbstractController
             "meta_description" => "Page d'accueil"
         ];
     }
+
+    public function profile($id) {
+
+        $userManager = new UserManager();
+        $user = $userManager->findOneById($id);
+
+        return [
+            "view" => VIEW_DIR . "security/profile.php",
+            "meta_description" => "Page d'accueil",
+            "data" => [
+                "user" => $user
+            ]
+        ];
+    }
 }

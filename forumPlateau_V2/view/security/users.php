@@ -9,8 +9,17 @@ $users = $result["data"]['users'];
 if ($users) {
     foreach ($users as $user) { ?>
 
+        <div><a href="index.php?ctrl=security&action=profile&id=<?= $user->getId() ?>"><?= $user ?></a>, profil créé le <?= $user->getRegistrationdate() ?> /a>
 
-    <?php }
+            <?php
+            if (App\Session::isAdmin()) { ?>
+
+            <a href="#">Nommer en tant qu'admin</a>
+            <?php } ?>
+
+        </div>
+
+<?php }
 } else {
     # code...
 }
